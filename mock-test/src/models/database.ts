@@ -1,7 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
-import { config } from "dotenv";
-
-config({ path: path.join(__dirname, "..", ".env") });
+// import { config } from "dotenv";
+// config({ path: path.join(__dirname, "..", ".env") });
 
 const sequelize = new Sequelize({
   dialect: "mysql",
