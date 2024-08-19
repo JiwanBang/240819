@@ -168,11 +168,11 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies of frontend
-        working-directory: ./mock-test
+        working-directory: ./240814/mock-test
         run: npm i
 
       - name: Run Test of frontend
-        working-directory: ./mock-test
+        working-directory: ./240814/mock-test
         run: npm run build
 
       - name: Add SSH key
