@@ -30,7 +30,7 @@ jobs:
           echo MESSAGE=${{ secrets.MESSAGE }} >> .env
 
       - name: Install dependencies of backend
-        wordking-directory: ./240814/mock-test
+        working-directory: ./240814/mock-test
         run: npm i
 
       - name: Run Test of backend
