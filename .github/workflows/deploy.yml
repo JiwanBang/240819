@@ -35,6 +35,20 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Wait for mySQL to be ready
+        run: |
+          until mysqladmin ping -h "127.0.0.1" P 3333 --silent; do
+            echo "Waiting for mySQL"
+            sleep 5
+          done
+
+      - name: Install mySQL Client
+        run: sudo apt-get install mysql-client
+
+      - name: Run mySQL commands
+        run: |
+          mysql -h "127.0.0.1" P 3333 -u ${{ secrets.MYSQL_USER }} -p${{ secrets.MYSQL_PASSWORD }} -e "SHOW DATABASES;"
+
       - name: set env
         working-directory: ./240814/mock-test
         run: |
