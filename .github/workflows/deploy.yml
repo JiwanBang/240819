@@ -144,11 +144,11 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies of frontend
-        working-directory: ./todo-list
+        working-directory: ./240816/todo-list
         run: npm i
 
       - name: Run Test of frontend
-        working-directory: ./todo-list
+        working-directory: ./240816/todo-list
         run: npm test
 
   deploy_backend:
@@ -175,6 +175,19 @@ jobs:
         working-directory: ./mock-test
         run: npm run build
 
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.EC2_KEY }}
+
+      - name: Ensure SSH directory exists
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+      - name: Add SSH known hosts
+        run: ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
       - name: Copy Files to EC2
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
@@ -183,8 +196,8 @@ jobs:
             rm -rf /var/www/backend
             fi
             mkdir /var/www/backend'
-          rsync -avz -e "ssh" ./server/build/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/backend
-          rsync -avz -e "ssh" ./server/package.json ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/backend/package.json
+          rsync -avz -e "ssh" ./240814/mock-test/build/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/backend
+          rsync -avz -e "ssh" ./240814/mock-test/build/package.json ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/backend/package.json
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
             export NVM_DIR="$HOME/.nvm"
             if [ -s "$NVM_DIR/nvm.sh" ]; then
