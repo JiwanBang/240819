@@ -50,7 +50,7 @@ jobs:
           mysql -h "127.0.0.1" P 3333 -u ${{ secrets.MYSQL_USER }} -p${{ secrets.MYSQL_PASSWORD }} -e "SHOW DATABASES;"
 
       - name: set env
-        working-directory: ./240814/mock-test
+        working-directory: ./mock-test
         run: |
           echo MYSQL_HOST=${{ secrets.MYSQL_HOST }} > .env
           echo MYSQL_USER=${{ secrets.MYSQL_USER }} >> .env
@@ -60,11 +60,11 @@ jobs:
           echo MESSAGE=${{ secrets.MESSAGE }} >> .env
 
       - name: Install dependencies of backend
-        working-directory: ./240814/mock-test
+        working-directory: ./mock-test
         run: npm i
 
       - name: Run Test of backend
-        working-directory: ./240814/mock-test
+        working-directory: ./mock-test
         run: npm test
 
   test_node:
@@ -168,11 +168,11 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies of frontend
-        working-directory: ./240814/mock-test
+        working-directory: ./mock-test
         run: npm i
 
       - name: Run Test of frontend
-        working-directory: ./240814/mock-test
+        working-directory: ./mock-test
         run: npm run build
 
       - name: Add SSH key
@@ -196,8 +196,8 @@ jobs:
             rm -rf /var/www/backend
             fi
             mkdir /var/www/backend'
-          rsync -avz -e "ssh" ./240814/mock-test/build/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/backend
-          rsync -avz -e "ssh" ./240814/mock-test/build/package.json ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/backend/package.json
+          rsync -avz -e "ssh" ./mock-test/build/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/backend
+          rsync -avz -e "ssh" ./mock-test/build/package.json ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/backend/package.json
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
             export NVM_DIR="$HOME/.nvm"
             if [ -s "$NVM_DIR/nvm.sh" ]; then
