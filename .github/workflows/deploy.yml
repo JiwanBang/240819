@@ -191,10 +191,7 @@ jobs:
       - name: Copy Files to EC2
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
-            if [ -d "/var/www/backend" ]
-            then
             rm -rf /var/www/backend
-            fi
             mkdir /var/www/backend'
           rsync -avz -e "ssh" ./mock-test/build/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/backend
           rsync -avz -e "ssh" ./mock-test/build/package.json ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/backend/package.json
