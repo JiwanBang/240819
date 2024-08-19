@@ -1,3 +1,7 @@
+import { config } from "dotenv";
+
+config();
+
 import sequelize from "../database";
 import Todo from "../Todo";
 
