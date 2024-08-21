@@ -8,7 +8,7 @@ export interface Todo {
 
 export const getList = async (): Promise<Todo[]> => {
   try {
-    const response = await instance.get("/todo");
+    const response = await instance.get("/todo", { withCredentials: true });
     return response.data;
   } catch (error) {
     console.log(error);

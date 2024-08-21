@@ -25,7 +25,8 @@ const TodoList = (): JSX.Element => {
               onClick={async () => {
                 try {
                   await axios.delete(
-                    `http://localhost:8080/api/todo/${item.id}`
+                    `http://localhost:8080/api/todo/${item.id}`,
+                    { withCredentials: true }
                   );
                 } catch (err) {
                   console.error(err);
