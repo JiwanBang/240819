@@ -28,6 +28,7 @@ router.patch("/", async (req: Request, res: Response) => {
 });
 
 router.delete("/:id", async (req: Request, res: Response) => {
+  console.log(req);
   try {
     const todo = await deleteTodo(+req.params.id);
     res.status(200).json(todo);
